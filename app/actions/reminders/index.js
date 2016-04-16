@@ -1,12 +1,12 @@
 import Action from 'candycane/dist/http/action';
 import map from 'candycane-jsonapi-mapper';
 
-@map(`list`)
+@map(`reminder`)
 export default class extends Action {
   data() {
     const bookshelf = this.app.make(`store`);
-    const List = bookshelf.model(`list`);
+    const Reminder = bookshelf.model(`reminder`);
 
-    return List.fetchAll({withRelated: `reminders`});
+    return Reminder.fetchAll({withRelated: `list`});
   }
 }

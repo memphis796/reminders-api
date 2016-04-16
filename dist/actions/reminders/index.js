@@ -21,11 +21,8 @@ let _default = (_dec = (0, _candycaneJsonapiMapper2.default)(`reminder`), _dec(_
   data() {
     const bookshelf = this.app.make(`store`);
     const Reminder = bookshelf.model(`reminder`);
-    const name = this.request.body.data.attributes.name;
-    const done = this.request.body.data.attributes.done;
 
-    const reminder = new Reminder({ name: name, done: done });
-    return reminder.save();
+    return Reminder.fetchAll({ withRelated: `list` });
   }
 }) || _class);
 

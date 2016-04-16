@@ -8,8 +8,9 @@ export default class extends Action {
     const Reminder = bookshelf.model(`reminder`);
     const name = this.request.body.data.attributes.name;
     const done = this.request.body.data.attributes.done;
+    const list_id = this.request.body.data.relationships.list.data.id;
 
-    const reminder = new Reminder({ name, done });
+    const reminder = new Reminder({ name, done, list_id });
     return reminder.save();
   }
 }

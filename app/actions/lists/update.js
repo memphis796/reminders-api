@@ -8,13 +8,22 @@ export default class extends Action {
     const List = bookshelf.model(`list`);
 
     const id = this.request.params.id;
+
+    return List.where({id}).fetch({withRelated: `reminders`})
+  }
+
+  after(list) {
     const title = this.request.body.data.attributes.title;
 
-    return List.where({id}).fetch()
-      .then((list) => {
-        list.set({title});
-
-        return list.save();
+    if (!list) {
+      this.setStatus(404);
+      return this.send({
+        status: 404,
+        message: `Resource not found`
       });
-  }
+    }
+
+    list.set({title});
+    return list.save();
+ }
 }

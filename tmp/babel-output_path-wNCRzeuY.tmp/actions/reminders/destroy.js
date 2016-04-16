@@ -17,12 +17,22 @@ var _candycaneJsonapiMapper2 = _interopRequireDefault(_candycaneJsonapiMapper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-let _default = (_dec = (0, _candycaneJsonapiMapper2.default)(`list`), _dec(_class = class _default extends _action2.default {
+let _default = (_dec = (0, _candycaneJsonapiMapper2.default)(`reminder`), _dec(_class = class _default extends _action2.default {
   data() {
+    const id = this.request.params.id;
     const bookshelf = this.app.make(`store`);
-    const List = bookshelf.model(`list`);
+    const Reminder = bookshelf.model(`reminder`);
 
-    return List.fetchAll({ withRelated: `reminders` });
+    return Reminder.where({ id: id }).fetch().then(reminder => {
+      if (reminder) {
+        return reminder.destroy();
+      }
+    });
+  }
+
+  after() {
+    this.setStatus(204);
+    this.send();
   }
 }) || _class);
 

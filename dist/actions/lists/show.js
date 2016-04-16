@@ -23,7 +23,19 @@ let _default = (_dec = (0, _candycaneJsonapiMapper2.default)(`list`), _dec(_clas
     const bookshelf = this.app.make(`store`);
     const List = bookshelf.model(`list`);
 
-    return List.where({ id: id }).fetch();
+    return List.where({ id: id }).fetch({ withRelated: `reminders` });
+  }
+
+  after(list) {
+    if (!list) {
+      this.setStatus(404);
+      return this.send({
+        status: 404,
+        message: `Resource not found`
+      });
+    }
+
+    return list;
   }
 }) || _class);
 

@@ -30,6 +30,11 @@ let AppRouter = class AppRouter extends _router2.default {
     this.patch(`/lists/:id`, `lists/update`);
     this.put(`/lists/:id`, `lists/update`);
     this.post(`/reminders`, `reminders/create`);
+    this.get(`/reminders`, 'reminders/index');
+    this.post(`/reminders`, 'reminders/create');
+    this.get(`/reminders/:id`, 'reminders/show');
+    this.patch(`/reminders/:id`, 'reminders/update');
+    this.delete(`/reminders/:id`, 'reminders/destroy');
   }
 };
 exports.default = AppRouter;

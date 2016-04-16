@@ -1,25 +1,23 @@
 import Action from 'candycane/dist/http/action';
 import map from 'candycane-jsonapi-mapper';
 
-@map(`list`)
+@map(`reminder`)
 export default class extends Action {
   data() {
     const id = this.request.params.id;
     const bookshelf = this.app.make(`store`);
-    const List = bookshelf.model(`list`);
+    const Reminder = bookshelf.model(`reminder`);
 
-    return List.where({id}).fetch({withRelated: `reminders`});
+    return Reminder.where({id}).fetch({withRelated: `list`});
   }
 
-  after(list) {
-    if (!list) {
+  after(reminder) {
+    if (!reminder) {
       this.setStatus(404);
-      return this.send({
+      this.send({
         status: 404,
         message: `Resource not found`
       });
     }
-
-    return list;
   }
 }

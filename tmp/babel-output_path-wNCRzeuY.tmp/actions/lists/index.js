@@ -22,7 +22,7 @@ let _default = (_dec = (0, _candycaneJsonapiMapper2.default)(`list`), _dec(_clas
     const bookshelf = this.app.make(`store`);
     const List = bookshelf.model(`list`);
 
-    return List.fetchAll();
+    return List.fetchAll({ withRelated: `reminders` });
   }
 }) || _class);
 

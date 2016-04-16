@@ -23,13 +23,23 @@ let _default = (_dec = (0, _candycaneJsonapiMapper2.default)(`list`), _dec(_clas
     const List = bookshelf.model(`list`);
 
     const id = this.request.params.id;
+
+    return List.where({ id: id }).fetch({ withRelated: `reminders` });
+  }
+
+  after(list) {
     const title = this.request.body.data.attributes.title;
 
-    return List.where({ id: id }).fetch().then(list => {
-      list.set({ title: title });
+    if (!list) {
+      this.setStatus(404);
+      return this.send({
+        status: 404,
+        message: `Resource not found`
+      });
+    }
 
-      return list.save();
-    });
+    list.set({ title: title });
+    return list.save();
   }
 }) || _class);
 
